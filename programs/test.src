@@ -1,0 +1,9 @@
+a       DATA    4
+b       DATA    2
+result  DATA    0
+
+        ADD     a
+        ADD     b
+        STO     result
+        OUT     result
+        HRS     a
