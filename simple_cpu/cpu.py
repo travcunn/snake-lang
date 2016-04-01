@@ -10,7 +10,7 @@ class Memory(object):
     def init_mem(self):
         """ Initialize memory. """
         self.mem = [0 for _ in range(0, MEMORY_SIZE)]
-        self.mem[0] = '001'  #: The Cardiac bootstrap operation.
+        self.mem[0] = '001'
 
     def get_memint(self, data):
         """ Get memory value. """
