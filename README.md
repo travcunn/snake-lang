@@ -1,5 +1,18 @@
-# simple-cpu-emulator
+# Simple CPU Emulator
 A simple CPU emulator and assembler written in Python
+
+# Architecture
+### CPU
+The CPU has 3 registers:
+- Program counter register
+- Instruction register
+- Accumulator register
+
+### Memory
+There are 4096 'virtual' memory locations.
+
+### IO
+Input and output are handled through stdin/stdout.
 
 # Installation
 ```
