@@ -2,12 +2,14 @@
 A simple CPU emulator and assembler written in Python
 
 # Installation
-python setup.py install
+```
+# python setup.py install
+```
 
 # Usage
 ### Assembler
 ```
-> assembler -h
+# assembler -h
 usage: assembler [-h] [-o OUTFILE] file
 
 A 2 pass assembler.
@@ -24,7 +26,7 @@ optional arguments:
 
 ### CPU
 ```
-> cpu -h
+# cpu -h
 usage: cpu [-h] [-o OUTFILE] [--step] file
 
 A simple cpu.
@@ -42,7 +44,7 @@ optional arguments:
 ### Putting it all together
 Alternatively, data can be piped into both the CPU and assembler.
 ```
-> assembler < programs/test.src | cpu
+# assembler < programs/test.src | cpu
 ```
 
 # Example Program
@@ -59,6 +61,6 @@ result  DATA    0
 ```
 Let's run it:
 ```
-> assembler < programs/test.src | cpu
+# assembler < programs/test.src | cpu
 6
 ```
