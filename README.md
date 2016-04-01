@@ -1,6 +1,19 @@
 # Simple CPU Emulator
 A simple CPU emulator and assembler written in Python
 
+# Table of Contents
+- [Architecture](#architecture)
+  - [CPU](#cpu)
+  - [Instruction Set](#instruction-set)
+  - [Memory](#memory)
+  - [IO](#io)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Assembler Usage](#assembler-usage)
+  - [CPU Usage](#cpu-usage)
+  - [Putting it all together](#putting-it-all-together)
+- [Example Program](#example-program)
+
 # Architecture
 ### CPU
 The CPU has 3 registers:
@@ -35,7 +48,7 @@ Input and output are handled through stdin/stdout.
 ```
 
 # Usage
-### Assembler
+### Assembler Usage
 ```
 # assembler -h
 usage: assembler [-h] [-o OUTFILE] file
@@ -52,7 +65,7 @@ optional arguments:
 
 ```
 
-### CPU
+### CPU Usage
 ```
 # cpu -h
 usage: cpu [-h] [-o OUTFILE] [--step] file
@@ -111,7 +124,7 @@ Assemble the program:
 002
 810
 ```
-Run it:
+Run the program:
 ```
 # assembler < programs/test.src | cpu
 6
