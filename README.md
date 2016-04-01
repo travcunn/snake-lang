@@ -59,7 +59,31 @@ result  DATA    0
         OUT     result
         HRS     a
 ```
-Let's run it:
+Assemble the program:
+```
+# assembler < programs/test.src
+002
+800
+004
+4
+005
+2
+006
+0
+010
+204
+011
+205
+012
+606
+013
+506
+014
+904
+002
+810
+```
+Run it:
 ```
 # assembler < programs/test.src | cpu
 6
