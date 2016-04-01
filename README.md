@@ -40,6 +40,7 @@ optional arguments:
 ```
 
 ### Putting it all together
+Alternatively, data can be piped into both the CPU and assembler.
 ```
 > assembler < programs/test.src | cpu
 ```
