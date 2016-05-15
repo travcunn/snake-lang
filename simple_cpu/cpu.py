@@ -32,7 +32,7 @@ class Memory(object):
                 res += "%s >%s< " % (self.normalize(addr), value)
             else:
                 res += "%s [%s] " % (self.normalize(addr), value)
-        print res
+        print(res)
 
 
 class IO(object):
@@ -131,9 +131,9 @@ class CPU(object):
         if self.step:
             self.show_mem()
             if len(self.reader):
-                print "top of Input: %s" % self.reader[-1]
-            print "IR: %s    PC: %s    Acc: %s\nOutput: %s\n" % (self.normalize(self.ir), \
-                self.normalize(self.pc), self.normalize(self.acc), self.format_output())
+                print("top of Input: %s" % self.reader[-1])
+            print("IR: %s    PC: %s    Acc: %s\nOutput: %s\n" % (self.normalize(self.ir),
+                self.normalize(self.pc), self.normalize(self.acc), self.format_output()))
             raw_input("press enter to continue >>")
 
         opcode, data = int(math.floor(self.ir / 100)), self.ir % 100
