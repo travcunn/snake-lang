@@ -1,4 +1,6 @@
 # Simple CPU Emulator
+[![Build Status](https://travis-ci.org/travcunn/simple-cpu-emulator.svg?branch=master)](https://travis-ci.org/travcunn/simple-cpu-emulator)
+
 A simple virtual machine and program assembler written in Python
 
 # Table of Contents
