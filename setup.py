@@ -19,6 +19,8 @@ setup  (
     },
     install_requires=[
         'pytest',
-        'mock'
+        'pytest-cov',
+        'mock',
+        'tox',
     ],
 )
