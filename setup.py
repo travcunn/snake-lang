@@ -13,8 +13,12 @@ setup  (
     package_dir = {'simple_cpu' : 'simple_cpu'},
     entry_points = {
         'console_scripts': [
-            'cpu = simple_cpu.__init__:cpu',
-            'assembler = simple_cpu.__init__:assembler',
+            'cpu = simple_cpu.__main__:cpu',
+            'assembler = simple_cpu.__main__:assembler',
         ],
     },
+    install_requires=[
+        'pytest',
+        'mock'
+    ],
 )

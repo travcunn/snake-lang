@@ -171,7 +171,7 @@ class CPU(object):
 
     def opcode_6(self, data):
         """ Store operation """
-        self.mem[data] = self.normalize(self.acc)
+        self.mem[data] = self.acc
 
     def opcode_7(self, data):
         """ Subtract Operation """
@@ -179,7 +179,6 @@ class CPU(object):
 
     def opcode_8(self, data):
         """ Unconditional Jump operation """
-        self.mem[99] = '8' + self.normalize(self.pc)
         self.pc = data
 
     def opcode_9(self, data):
