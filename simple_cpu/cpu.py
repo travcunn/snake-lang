@@ -183,9 +183,9 @@ class CPU(object):
         self.pc = data
 
     def opcode_9(self, data):
-        """ Halt and Reset operation """
-        self.reset()
- 
+        """ Halt operation """
+        self.running = False
+
     def opcode_10(self, data):
         """ Multiply operation """
         self.acc *= self.get_memint(data)
@@ -195,7 +195,7 @@ class CPU(object):
         self.acc /= self.get_memint(data)
 
     def run(self, pc=None):
-        """ Runs code in memory until halt/reset opcode. """
+        """ Runs code in memory until halt opcode. """
         if pc:
             self.pc = pc
         self.running = True

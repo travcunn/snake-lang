@@ -6,4 +6,4 @@ result  DATA    0
         ADD     b
         STO     result
         OUT     result
-        HRS     a
+        HLT     a

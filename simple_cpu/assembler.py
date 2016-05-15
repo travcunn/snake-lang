@@ -8,7 +8,7 @@ OP_CODES = {
     "sto": 6,
     "sub": 7,
     "jmp": 8,
-    "hrs": 9,
+    "hlt": 9,
     "mul": 10,
     "div": 11,
 }
