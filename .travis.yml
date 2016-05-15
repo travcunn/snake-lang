@@ -1,7 +1,7 @@
 language: python
 sudo: false
 python:
-      - "2.7"
+  - "2.7"
           
 env:
   - TOX_ENV=py27
@@ -12,8 +12,5 @@ env:
 script:
   - tox -e $TOX_ENV
 
-before_install:
-  - pip install codecov
-
 after_success:
-  - codecov -e TOX_ENV
+  - bash <(curl -s https://codecov.io/bash)
