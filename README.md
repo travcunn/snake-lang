@@ -1,5 +1,5 @@
 # Simple CPU Emulator
-A simple CPU emulator and assembler written in Python
+A simple virtual machine and program assembler written in Python
 
 # Table of Contents
 - [Architecture](#architecture)
