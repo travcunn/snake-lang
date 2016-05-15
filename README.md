@@ -1,6 +1,19 @@
 # Simple CPU Emulator
 A simple CPU emulator and assembler written in Python
 
+# Table of Contents
+- [Architecture](#architecture)
+  - [CPU](#cpu)
+  - [Instruction Set](#instruction-set)
+  - [Memory](#memory)
+  - [IO](#io)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Assembler Usage](#assembler-usage)
+  - [CPU Usage](#cpu-usage)
+  - [Putting it all together](#putting-it-all-together)
+- [Example Program](#example-program)
+
 # Architecture
 ### CPU
 The CPU has 3 registers:
@@ -22,6 +35,9 @@ The CPU has 3 registers:
 | 7      | SUB      | Subtract                  | subtract the contents of a specified memory cell from the accumulator.                                                                                                                                                   |
 | 8      | JMP      | Jump                      | jump to a specified memory cell. The current cell number is written in cell 99. This allows for one level of subroutines by having the return be the instruction at cell 99 (which had '8' hardcoded as the first digit. |
 | 9      | HRS      | Halt and reset            | move bug to the specified cell, then stop program execution.                                                                                                                                                             |
+| 10     | MUL      | Multiply                  | multiply the contents of the accumulator by the memory cell and store in the accumulator                                                                                                                                 |
+| 11     | DIV      | Divide                    | divide the contents of accumulator by the memory cell and store in the accumulator                                                                                                                                   |
+
 
 ### Memory
 There are 4096 'virtual' memory locations.
@@ -35,7 +51,7 @@ Input and output are handled through stdin/stdout.
 ```
 
 # Usage
-### Assembler
+### Assembler Usage
 ```
 # assembler -h
 usage: assembler [-h] [-o OUTFILE] file
@@ -52,7 +68,7 @@ optional arguments:
 
 ```
 
-### CPU
+### CPU Usage
 ```
 # cpu -h
 usage: cpu [-h] [-o OUTFILE] [--step] file
@@ -111,7 +127,7 @@ Assemble the program:
 002
 810
 ```
-Run it:
+Run the program:
 ```
 # assembler < programs/test.src | cpu
 6
