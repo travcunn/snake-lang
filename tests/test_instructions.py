@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.join('..', '..', 'simple_cpu'))
+
 import unittest
 
 import mock

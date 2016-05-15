@@ -63,3 +63,4 @@ target/
 
 # Vim stuff
 *.swp
+*.swo
