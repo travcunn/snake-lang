@@ -5,11 +5,6 @@
 A simple virtual machine and program assembler written in Python
 
 # Table of Contents
-- [Architecture](#architecture)
-  - [CPU](#cpu)
-  - [Instruction Set](#instruction-set)
-  - [Memory](#memory)
-  - [IO](#io)
 - [Installation](#installation)
 - [Testing](#testing)
 - [Usage](#usage)
@@ -17,37 +12,11 @@ A simple virtual machine and program assembler written in Python
   - [CPU Usage](#cpu-usage)
   - [Putting it all together](#putting-it-all-together)
 - [Example Program](#example-program)
-
-# Architecture
-### CPU
-The CPU has 3 registers:
-- Program counter register
-- Instruction register
-- Accumulator register
-
-### Instruction Set
-
-| Opcode | Mnemonic | Instruction               | Description                                                                                                                                                                                                              |
-|--------|----------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 0      | INP      | Input                     | take a number from the input card and put it in a specified memory cell.                                                                                                                                                 |
-| 1      | CLA      | Clear and add             | clear the accumulator and add the contents of a memory cell to the accumulator.                                                                                                                                          |
-| 2      | ADD      | Add                       | add the contents of a memory cell to the accumulator.                                                                                                                                                                    |
-| 3      | TAC      | Test accumulator contents | performs a sign test on the contents of the accumulator; if minus, jump to a specified memory cell.                                                                                                                      |
-| 4      | SFT      | Shift                     | shifts the accumulator x places left, then y places right, where x is the upper address digit and y is the lower.                                                                                                        |
-| 5      | OUT      | Output                    | take a number from the specified memory cell and write it on the output card.                                                                                                                                            |
-| 6      | STO      | Store                     | copy the contents of the accumulator into a specified memory cell.                                                                                                                                                       |
-| 7      | SUB      | Subtract                  | subtract the contents of a specified memory cell from the accumulator.                                                                                                                                                   |
-| 8      | JMP      | Jump                      | jump to a specified memory cell. The current cell number is written in cell 99. This allows for one level of subroutines by having the return be the instruction at cell 99 (which had '8' hardcoded as the first digit. |
-| 9      | HLT      | Halt                      | stop program execution.                                                                                                                                                             |
-| 10     | MUL      | Multiply                  | multiply the contents of the accumulator by the memory cell and store in the accumulator                                                                                                                                 |
-| 11     | DIV      | Divide                    | divide the contents of accumulator by the memory cell and store in the accumulator                                                                                                                                   |
-
-
-### Memory
-There are 4096 'virtual' memory locations.
-
-### IO
-Input and output are handled through stdin/stdout.
+- [Architecture](#architecture)
+  - [CPU](#cpu)
+  - [Instruction Set](#instruction-set)
+  - [Memory](#memory)
+  - [IO](#io)
 
 # Installation
 ```
@@ -145,3 +114,34 @@ Run the program:
 # assembler < programs/test.src | cpu
 6
 ```
+
+# Architecture
+### CPU
+The CPU has 3 registers:
+- Program counter register
+- Instruction register
+- Accumulator register
+
+### Instruction Set
+
+| Opcode | Mnemonic | Instruction               | Description                                                                                                                                                                                                              |
+|--------|----------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0      | INP      | Input                     | take a number from the input card and put it in a specified memory cell.                                                                                                                                                 |
+| 1      | CLA      | Clear and add             | clear the accumulator and add the contents of a memory cell to the accumulator.                                                                                                                                          |
+| 2      | ADD      | Add                       | add the contents of a memory cell to the accumulator.                                                                                                                                                                    |
+| 3      | TAC      | Test accumulator contents | performs a sign test on the contents of the accumulator; if minus, jump to a specified memory cell.                                                                                                                      |
+| 4      | SFT      | Shift                     | shifts the accumulator x places left, then y places right, where x is the upper address digit and y is the lower.                                                                                                        |
+| 5      | OUT      | Output                    | take a number from the specified memory cell and write it on the output card.                                                                                                                                            |
+| 6      | STO      | Store                     | copy the contents of the accumulator into a specified memory cell.                                                                                                                                                       |
+| 7      | SUB      | Subtract                  | subtract the contents of a specified memory cell from the accumulator.                                                                                                                                                   |
+| 8      | JMP      | Jump                      | jump to a specified memory cell. The current cell number is written in cell 99. This allows for one level of subroutines by having the return be the instruction at cell 99 (which had '8' hardcoded as the first digit. |
+| 9      | HLT      | Halt                      | stop program execution.                                                                                                                                                             |
+| 10     | MUL      | Multiply                  | multiply the contents of the accumulator by the memory cell and store in the accumulator                                                                                                                                 |
+| 11     | DIV      | Divide                    | divide the contents of accumulator by the memory cell and store in the accumulator                                                                                                                                   |
+
+
+### Memory
+There are 4096 'virtual' memory locations.
+
+### IO
+Input and output are handled through stdin/stdout.
