@@ -1,5 +1,5 @@
 # Snake VM (virtual machine)
-[![Build Status](https://travis-ci.org/travcunn/me-virtual-machine.svg?branch=master)](https://travis-ci.org/travcunn/simple-cpu-emulator) [![codecov](https://codecov.io/gh/travcunn/me-virtual-machine/branch/master/graph/badge.svg)](https://codecov.io/gh/travcunn/simple-cpu-emulator)
+[![Build Status](https://travis-ci.org/travcunn/snake-vm.svg?branch=master)](https://travis-ci.org/travcunn/simple-cpu-emulator) [![codecov](https://codecov.io/gh/travcunn/snake-vm/branch/master/graph/badge.svg)](https://codecov.io/gh/travcunn/simple-cpu-emulator)
 
 
 A simple virtual machine and program assembler written in Python
