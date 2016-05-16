@@ -1,14 +1,14 @@
 import sys
 import os
-sys.path.append(os.path.join('..', '..', 'simple_cpu'))
+sys.path.append(os.path.join('..', '..', 'snake'))
 
 import unittest
 
 import mock
 import pytest
 
-from simple_cpu.cpu import MEMORY_SIZE
-from simple_cpu.cpu import System
+from snake.vm import MEMORY_SIZE
+from snake.vm import System
 
 
 class BaseSystemTest(unittest.TestCase):
