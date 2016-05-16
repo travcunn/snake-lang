@@ -29,7 +29,7 @@ A simple virtual machine and program assembler written in Python
 ```
 Code coverage:
 ```
-# py.test --cov-report=term-missing --cov=simple_cpu tests/
+# py.test --cov-report=term-missing --cov=snake tests/
 ```
 
 # Usage
