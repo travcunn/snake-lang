@@ -53,7 +53,7 @@ def vm():
 
     # Take action depending on whether or not this is being pipelined
     if sys.stdin.isatty():
-        parser.add_argument("file", help="file to be loaded.")
+        parser.add_argument("file", help="bytecode file to be loaded.")
         parser.add_argument('-o','--outfile', help='output file',
                             default=None, required=False)
         parser.add_argument('--step', dest='step',
