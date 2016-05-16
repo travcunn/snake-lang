@@ -2,7 +2,7 @@ import argparse
 import sys
 
 from .assembler import Assembler
-from .cpu import System
+from .vm import System
 
 
 def assembler():
@@ -47,8 +47,8 @@ def assembler():
                 print(record)
 
 
-def cpu():
-    parser = argparse.ArgumentParser(description='A simple cpu.',
+def vm():
+    parser = argparse.ArgumentParser(description='A simple vm.',
             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     # Take action depending on whether or not this is being pipelined
@@ -57,7 +57,7 @@ def cpu():
         parser.add_argument('-o','--outfile', help='output file',
                             default=None, required=False)
         parser.add_argument('--step', dest='step',
-                            help='step through each cpu cycle.',
+                            help='step through each instruction cycle.',
                             action='store_true')
         parser.set_defaults(step=False)
         args = parser.parse_args()
