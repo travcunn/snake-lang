@@ -13,7 +13,7 @@ setup  (
     package_dir = {'snake' : 'snake'},
     entry_points = {
         'console_scripts': [
-            'snakevm = snake.__main__:cpu',
+            'snakevm = snake.__main__:vm',
             'assembler = snake.__main__:assembler',
         ],
     },
