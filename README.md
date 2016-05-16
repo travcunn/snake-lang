@@ -11,6 +11,7 @@ A simple virtual machine and program assembler written in Python
   - [Memory](#memory)
   - [IO](#io)
 - [Installation](#installation)
+- [Testing](#testing)
 - [Usage](#usage)
   - [Assembler Usage](#assembler-usage)
   - [CPU Usage](#cpu-usage)
@@ -51,6 +52,15 @@ Input and output are handled through stdin/stdout.
 # Installation
 ```
 # python setup.py install
+```
+
+# Testing
+```
+# py.test
+```
+Code coverage:
+```
+# py.test --cov-report=term-missing --cov=simple_cpu tests/
 ```
 
 # Usage
