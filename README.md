@@ -50,12 +50,12 @@ optional arguments:
 
 ```
 
-### CPU Usage
+### Snake VM usage
 ```
-# cpu -h
-usage: cpu [-h] [-o OUTFILE] [--step] file
+# snakevm -h
+usage: snakevm [-h] [-o OUTFILE] [--step] file
 
-A simple cpu.
+A simple vm.
 
 positional arguments:
   file                  file to be assembled.
@@ -64,13 +64,13 @@ optional arguments:
   -h, --help            show this help message and exit
   -o OUTFILE, --outfile OUTFILE
                         output file (default: None)
-  --step                step through each cpu cycle. (default: False)
+  --step                step through each instruction cycle. (default: False)
 ```
 
 ### Putting it all together
-Alternatively, data can be piped into both the CPU and assembler.
+Alternatively, data can be piped into both the VM and assembler.
 ```
-# assembler < programs/test.src | cpu
+# assembler < programs/test.src | snakevm
 ```
 
 # Example Program
@@ -111,7 +111,7 @@ Assemble the program:
 ```
 Run the program:
 ```
-# assembler < programs/test.src | cpu
+# assembler < programs/test.src | snakevm
 6
 ```
 
