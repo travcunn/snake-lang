@@ -1,0 +1,18 @@
+a       DATA    4
+b       DATA    2
+counter DATA    1000
+inc     DATA    1
+result  DATA    0
+
+start   CLA     result
+        ADD     a
+        ADD     b
+        STO     result
+        CLA     counter
+        SUB     inc
+        STO     counter
+        OUT     result
+        TAC     stop
+        JMP     start
+
+stop    HLT     a
