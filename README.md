@@ -58,7 +58,7 @@ usage: snakevm [-h] [-o OUTFILE] [--step] file
 A simple vm.
 
 positional arguments:
-  file                  file to be assembled.
+  file                  bytecode file to be loaded.
 
 optional arguments:
   -h, --help            show this help message and exit
