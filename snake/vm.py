@@ -7,10 +7,11 @@ MEMORY_SIZE = 1024 * 4
 class Memory(object):
     """ This class controls the virtual memory space of the simulator. """
 
-    def init_mem(self):
+    def __init__(self):
         """ Initialize memory. """
         self.mem = [0 for _ in range(0, MEMORY_SIZE)]
         self.mem[0] = '001'
+        super(Memory, self).__init__()
 
     def get_memint(self, data):
         """ Get memory value. """
@@ -38,10 +39,6 @@ class Memory(object):
 class IO(object):
     """ Class for virtual I/O. """
 
-    def init_reader(self):
-        """ Initializes the input device. """
-        self.reader = []
-
     def load_file(self, inputfile):
         """ Load a program into the input device. """
         self.reader = list(line.rstrip('\n') for line in inputfile.readlines())
@@ -63,32 +60,14 @@ class CPU(object):
     """ CPU class. """
 
     def __init__(self):
-        self.init_cpu()
-        self.reset()
+        self.init_instructions()
+        self.clear_registers()
         self.step = False
-        try:
-            self.init_mem()
-        except AttributeError:
-            raise NotImplementedError('Add a mixin memory-enabled class.')
-        try:
-            self.init_reader()
-        except AttributeError:
-            raise NotImplementedError('Add a mixin IO-enabled class.')
 
-    def reset(self):
-        """ Clear CPU registers. """
+        super(CPU, self).__init__()
 
-        # Program counter register
-        self.pc = 0
-        # Instruction register
-        self.ir = 0
-        # Accumulator register
-        self.acc = 0
-        # Is the CPU running?
-        self.running = False
-
-    def init_cpu(self):
-        """ Loads all CPU opcodes. """
+    def init_instructions(self):
+        """ Loads all CPU instructions. """
 
         self.opcodes = [
             self.opcode_0,
@@ -104,6 +83,18 @@ class CPU(object):
             self.opcode_10,
             self.opcode_11,
         ]
+
+    def clear_registers(self):
+        """ Clear CPU registers. """
+
+        # Program counter register
+        self.pc = 0
+        # Instruction register
+        self.ir = 0
+        # Accumulator register
+        self.acc = 0
+        # Is the CPU running?
+        self.running = False
 
     def fetch(self):
         """
