@@ -53,15 +53,15 @@ class IO(object):
         print(data)
 
 
-class CPU(object):
-    """ CPU class. """
+class VirtualMachine(object):
+    """ Virtual machine that executes SnakeVM byte code. """
 
     def __init__(self):
         self.init_instructions()
         self.clear_registers()
         self.step = False
 
-        super(CPU, self).__init__()
+        super(VirtualMachine, self).__init__()
 
     def init_instructions(self):
         """ Loads all CPU instructions. """
@@ -181,5 +181,8 @@ class CPU(object):
             self.process()
 
 
-class System(CPU, Memory, IO):
+class System(VirtualMachine, Memory, IO):
+    """
+    Composition of the Snake VirtualMachine, virtual memory, and virtual IO.
+    """
     pass
