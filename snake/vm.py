@@ -156,6 +156,7 @@ class VirtualMachine(object):
 
 class System(VirtualMachine, Memory, IO):
     """
-    Composition of the Snake VirtualMachine, virtual memory, and virtual IO.
+    Composition of the Snake virtual machine, virtual memory, and virtual
+    IO.
     """
     pass
