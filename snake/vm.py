@@ -41,16 +41,13 @@ class IO(object):
 
     def load_file(self, inputfile):
         """ Load a program into the input device. """
-        self.reader = list(line.rstrip('\n') for line in inputfile.readlines())
-        self.reader.reverse()
+
+        input_file = reversed(inputfile.readlines())
+        self.reader = [line.rstrip('\n') for line in input_file]
 
     def get_input(self):
         """ Receives input from the IO device. """
-        try:
-            return self.reader.pop()
-        except IndexError:
-            # Fall back to raw_input() in the case of EOF on the reader.
-            return raw_input('INP: ')[:3]
+        return self.reader.pop()
 
     def stdout(self, data):
         print(data)
