@@ -172,10 +172,8 @@ class VirtualMachine(object):
         """ Divide operation """
         self.acc /= self.get_memint(data)
 
-    def run(self, pc=None):
+    def run(self):
         """ Runs code in memory until halt opcode. """
-        if pc:
-            self.pc = pc
         self.running = True
         while self.running:
             self.process()
