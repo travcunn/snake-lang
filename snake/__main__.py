@@ -56,17 +56,12 @@ def vm():
         parser.add_argument("file", help="bytecode file to be loaded.")
         parser.add_argument('-o','--outfile', help='output file',
                             default=None, required=False)
-        parser.add_argument('--step', dest='step',
-                            help='step through each instruction cycle.',
-                            action='store_true')
-        parser.set_defaults(step=False)
         args = parser.parse_args()
 
         try:
             system = System()
             with open(args.file, 'r') as f:
                 system.load_file(f)
-            system.step = args.step
             system.run()
         except IOError:
             print("[IO Error]: The source file could not be opened.")

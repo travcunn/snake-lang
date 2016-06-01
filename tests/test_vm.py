@@ -1,3 +1,4 @@
+from StringIO import StringIO
 import sys
 import os
 import unittest
@@ -14,6 +15,37 @@ class BaseSystemTest(unittest.TestCase):
     """ Base system test. """
     def setUp(self):
         self.vm = System()
+
+
+class VirtualMachineTest(unittest.TestCase):
+    """ Test the virtual machine. """
+
+    @mock.patch('snake.vm.System.opcode_0')
+    def test_cycle(self, mock_opcode_0):
+        """ Test a single cycle of bytecode execution. """
+        vm = System()
+        test_file = StringIO("001")
+        vm.load_file(test_file)
+        vm.cycle()
+        assert mock_opcode_0.called
+
+    @mock.patch('snake.vm.System.cycle')
+    def test_loop(self, mock_cycle):
+        """ Test the VM execution loop. """
+
+        vm = System()
+        test_file = StringIO("001")
+        vm.load_file(test_file)
+
+        def stop_vm():
+            vm.running = False
+
+        # Stop the VM after one cycle
+        mock_cycle.side_effect = stop_vm
+        vm.run()
+        assert mock_cycle.called
+
+        
 
 
 class InpInstructionTest(BaseSystemTest):

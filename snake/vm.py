@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import math
 
 # Set memory to 4k
@@ -17,19 +19,6 @@ class Memory(object):
         """ Get memory value. """
         return int(self.mem[data])
 
-    def show_mem(self):
-        res = ""
-        for addr, value in enumerate(self.mem):
-            if addr % 10 == 0:
-                res += '\n'
-            if not value:
-                value = "---"
-            if self.pc - 1 == addr:
-                res += "%s >%s< " % (addr, value)
-            else:
-                res += "%s [%s] " % (addr, value)
-        print(res)
-
 
 class IO(object):
     """ Class for virtual I/O. """
@@ -37,8 +26,8 @@ class IO(object):
     def load_file(self, inputfile):
         """ Load a program into the input device. """
 
-        input_file = reversed(inputfile.readlines())
-        self.reader = [line.rstrip('\n') for line in input_file]
+        contents = reversed(inputfile.readlines())
+        self.reader = [line.rstrip('\n') for line in contents]
 
     def get_input(self):
         """ Receives input from the IO device. """
@@ -54,7 +43,6 @@ class VirtualMachine(object):
     def __init__(self):
         self.init_instructions()
         self.clear_registers()
-        self.step = False
 
         super(VirtualMachine, self).__init__()
 
@@ -97,18 +85,10 @@ class VirtualMachine(object):
         self.ir = self.get_memint(self.pc)
         self.pc += 1
 
-    def process(self):
-        """ Process a single opcode from the current program counter. """
+    def cycle(self):
+        """ Execute a single opcode from the current program counter. """
 
         self.fetch()
-
-        if self.step:
-            self.show_mem()
-            if len(self.reader):
-                print("top of Input: %s" % self.reader[-1])
-            print("IR: %s    PC: %s    Acc: %s" % (self.ir,
-                                                   self.pc, self.acc))
-            raw_input("press enter to continue >>")
 
         opcode, data = int(math.floor(self.ir / 100)), self.ir % 100
 
@@ -171,7 +151,7 @@ class VirtualMachine(object):
         """ Runs code in memory until halt opcode. """
         self.running = True
         while self.running:
-            self.process()
+            self.cycle()
 
 
 class System(VirtualMachine, Memory, IO):

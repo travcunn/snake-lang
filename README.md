@@ -53,7 +53,7 @@ optional arguments:
 ### Snake VM usage
 ```
 # snakevm -h
-usage: snakevm [-h] [-o OUTFILE] [--step] file
+usage: snakevm [-h] [-o OUTFILE] file
 
 A simple vm.
 
@@ -64,7 +64,6 @@ optional arguments:
   -h, --help            show this help message and exit
   -o OUTFILE, --outfile OUTFILE
                         output file (default: None)
-  --step                step through each instruction cycle. (default: False)
 ```
 
 ### Putting it all together
