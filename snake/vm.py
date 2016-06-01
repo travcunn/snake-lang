@@ -42,18 +42,10 @@ class IO(object):
         """ Initializes the input device. """
         self.reader = []
 
-    def init_output(self):
-        """ Initializes output device. """
-        self.output = []
-
     def load_file(self, inputfile):
         """ Load a program into the input device. """
         self.reader = list(line.rstrip('\n') for line in inputfile.readlines())
         self.reader.reverse()
-
-    def format_output(self):
-        """ Format the output of this virtual IO device. """
-        return '\n'.join(self.output)
 
     def get_input(self):
         """ Receives input from the IO device. """
@@ -80,7 +72,6 @@ class CPU(object):
             raise NotImplementedError('Add a mixin memory-enabled class.')
         try:
             self.init_reader()
-            self.init_output()
         except AttributeError:
             raise NotImplementedError('Add a mixin IO-enabled class.')
 
@@ -132,8 +123,8 @@ class CPU(object):
             self.show_mem()
             if len(self.reader):
                 print("top of Input: %s" % self.reader[-1])
-            print("IR: %s    PC: %s    Acc: %s\nOutput: %s\n" % (self.normalize(self.ir),
-                self.normalize(self.pc), self.normalize(self.acc), self.format_output()))
+            print("IR: %s    PC: %s    Acc: %s" % (self.normalize(self.ir),
+                self.normalize(self.pc), self.normalize(self.acc)))
             raw_input("press enter to continue >>")
 
         opcode, data = int(math.floor(self.ir / 100)), self.ir % 100
@@ -200,7 +191,6 @@ class CPU(object):
         self.running = True
         while self.running:
             self.process()
-        self.init_output()
 
 
 class System(CPU, Memory, IO):

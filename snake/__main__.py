@@ -71,8 +71,7 @@ def vm():
         except IOError:
             print("[IO Error]: The source file could not be opened.")
         except:
-            print "IR: %s\nPC: %s\nOutput: %s\n" % \
-                (system.ir, system.pc, system.format_output())
+            print "IR: %s\nPC: %s\n" % (system.ir, system.pc)
             raise
     else:
         try:
@@ -82,8 +81,7 @@ def vm():
         except StopIteration:
             print("[IO Error]: The source program could not be read from stdin")
         except:
-            print "IR: %s\nPC: %s\nOutput: %s\n" % \
-                (system.ir, system.pc, system.format_output())
+            print "IR: %s\nPC: %s\n" % (system.ir, system.pc)
             raise
 
 
