@@ -5,7 +5,7 @@ MEMORY_SIZE = 1024 * 4
 
 
 class Memory(object):
-    """ This class controls the virtual memory space of the simulator. """
+    """ This class controls the virtual memory space of the VM. """
 
     def __init__(self):
         """ Initialize memory. """
@@ -17,11 +17,6 @@ class Memory(object):
         """ Get memory value. """
         return int(self.mem[data])
 
-    @staticmethod
-    def normalize(data):
-        """ Normalizes data inserted into memory. """
-        return str(data)
-
     def show_mem(self):
         res = ""
         for addr, value in enumerate(self.mem):
@@ -30,9 +25,9 @@ class Memory(object):
             if not value:
                 value = "---"
             if self.pc - 1 == addr:
-                res += "%s >%s< " % (self.normalize(addr), value)
+                res += "%s >%s< " % (addr, value)
             else:
-                res += "%s [%s] " % (self.normalize(addr), value)
+                res += "%s [%s] " % (addr, value)
         print(res)
 
 
@@ -111,8 +106,8 @@ class VirtualMachine(object):
             self.show_mem()
             if len(self.reader):
                 print("top of Input: %s" % self.reader[-1])
-            print("IR: %s    PC: %s    Acc: %s" % (self.normalize(self.ir),
-                self.normalize(self.pc), self.normalize(self.acc)))
+            print("IR: %s    PC: %s    Acc: %s" % (self.ir,
+                                                   self.pc, self.acc))
             raw_input("press enter to continue >>")
 
         opcode, data = int(math.floor(self.ir / 100)), self.ir % 100
