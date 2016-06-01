@@ -1,12 +1,11 @@
 import sys
 import os
-sys.path.append(os.path.join('..', '..', 'snake'))
-
 import unittest
 
 import mock
 import pytest
 
+sys.path.append(os.path.join('..', '..', 'snake'))
 from snake.vm import MEMORY_SIZE
 from snake.vm import System
 
