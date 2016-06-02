@@ -10,7 +10,7 @@ matrix:
         - python: 3.5
 
 script:
-  - py.test --cov-report=term-missing --cov-report=xml --cov=snake/ tests/
+  - "py.test --cov-report=term-missing --cov-report=xml --cov=snake/ tests/"
   
 install:
   - pip install codecov tox
