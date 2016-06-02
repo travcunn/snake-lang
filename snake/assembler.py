@@ -106,9 +106,6 @@ class Assembler(object):
         """
         Pads either an integer or a number in string format with zeros.
         """
-        orig = int(data)
         padding = '0' * length
         data = '%s%s' % (padding, abs(data))
-        if orig < 0:
-            return '-' + data[-length:]
         return data[-length:]
