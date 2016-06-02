@@ -1,10 +1,6 @@
 """ Test the CLI application. """
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
-import sys
 import os
+import sys
 
 from mock import mock_open
 from mock import patch
