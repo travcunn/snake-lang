@@ -1,16 +1,23 @@
 """ Test the CLI application. """
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import os
 import sys
+
 
 from mock import mock_open
 from mock import patch
 import pytest
 
 sys.path.append(os.path.join('..', '..', 'snake'))
+from snake.cli import assembler
 from snake.cli import assemble_from_args
 from snake.cli import assemble_from_stdin
 from snake.cli import create_assembler_parser
 from snake.cli import create_vm_parser
+from snake.cli import vm
 from snake.cli import vm_from_args
 from snake.cli import vm_from_stdin
 
@@ -70,6 +77,38 @@ def test_assembler_with_pipe(mock_sys):
     assemble_from_stdin()
 
 
+@patch('snake.cli.create_assembler_parser')
+@patch('snake.cli.assemble_from_stdin')
+def test_assembler_entrypoint_stdin(mock_assemble_from_stdin,
+                                    mock_assembler_parser):
+    """ Test the assembler entrypoint with stdin input. """
+    test_program = StringIO("""
+A   DATA    0
+    HLT     A
+    """)
+    with patch("sys.stdin", test_program):
+        with patch("sys.stdout", new_callable=StringIO):
+            assembler()
+    assert mock_assemble_from_stdin.called
+
+
+@patch('snake.cli.create_assembler_parser')
+@patch('snake.cli.sys')
+@patch('snake.cli.assemble_from_args')
+def test_assembler_entrypoint_args(mock_assemble_from_args,
+                                   mock_sys,
+                                   mock_assembler_parser):
+    """ Test the assembler entrypoint with arguments. """
+    test_program = StringIO("""
+A   DATA    0
+    HLT     A
+    """)
+    with patch("sys.stdin", test_program):
+        with patch("sys.stdout", new_callable=StringIO):
+            assembler()
+    assert mock_assemble_from_args.called
+
+
 def test_vm_with_empty_args(vm_parser):
     """ Test the VM with empty CLI args. """
 
@@ -94,3 +133,34 @@ def test_vm_with_pipe(mock_sys):
 
     with pytest.raises(IndexError):
         vm_from_stdin()
+
+
+@patch('snake.cli.create_vm_parser')
+@patch('snake.cli.vm_from_stdin')
+def test_vm_entrypoint_stdin(mock_vm_from_stdin,
+                             mock_vm_parser):
+    """ Test the vm entrypoint with stdin input. """
+    test_program = StringIO("""
+A   DATA    0
+    HLT     A
+    """)
+    with patch("sys.stdin", test_program):
+        with patch("sys.stdout", new_callable=StringIO):
+            vm()
+    assert mock_vm_from_stdin.called
+
+
+@patch('snake.cli.create_vm_parser')
+@patch('snake.cli.sys')
+@patch('snake.cli.vm_from_args')
+def test_vm_entrypoint_args(mock_vm_parser, mock_sys, mock_vm_from_args):
+    """ Test the vm entrypoint with arguments. """
+    test_program = StringIO("""
+A   DATA    0
+    HLT     A
+    """)
+    with patch("sys.stdin", test_program):
+        with patch("sys.stdout", new_callable=StringIO):
+            vm()
+
+    assert mock_vm_from_args.called
