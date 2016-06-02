@@ -1,3 +1,4 @@
+""" Snake Virtual Machine. """
 from __future__ import print_function
 
 import math
@@ -23,6 +24,9 @@ class Memory(object):
 class IO(object):
     """ Class for virtual I/O. """
 
+    def __init__(self):
+        self.reader = []
+
     def load_file(self, inputfile):
         """ Load a program into the input device. """
 
@@ -34,6 +38,7 @@ class IO(object):
         return self.reader.pop()
 
     def stdout(self, data):
+        """ Print data to stdout. """
         print(data)
 
 
@@ -114,9 +119,9 @@ class VirtualMachine(object):
     def opcode_4(self, data):
         """ Shift operation """
         x, y = int(math.floor(data / 10)), int(data % 10)
-        for i in range(0, x):
+        for _ in range(0, x):
             self.acc = (self.acc * 10) % 10000
-        for i in range(0, y):
+        for _ in range(0, y):
             self.acc = int(math.floor(self.acc / 10))
 
     def opcode_5(self, data):
