@@ -38,7 +38,7 @@ class IO(object):
 
     def stdout(self, data):
         """ Print data to stdout. """
-        sys.stdout.write(data)
+        sys.stdout.write(str(data) + "\n")
 
 
 class VirtualMachine(object):

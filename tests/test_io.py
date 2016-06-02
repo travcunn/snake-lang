@@ -36,5 +36,5 @@ def test_io_stdout(system):
     with patch('snake.vm.sys.stdout') as mock_stdout:
         system.stdout('hello world')
         mock_stdout.write.assert_has_calls([
-            call('hello world')
+            call('hello world\n')
         ])
