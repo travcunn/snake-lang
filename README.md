@@ -1,6 +1,7 @@
 # Snake VM (virtual machine)
 [![Build Status](https://travis-ci.org/travcunn/snake-vm.svg?branch=master)](https://travis-ci.org/travcunn/snake-vm) [![codecov](https://codecov.io/gh/travcunn/snake-vm/branch/master/graph/badge.svg)](https://codecov.io/gh/travcunn/snake-vm)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/839593667d9742098652296b8d0f1aa1)](https://www.codacy.com/app/tcunningham/snake-vm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=travcunn/snake-vm&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/839593667d9742098652296b8d0f1aa1)](https://www.codacy.com/app/tcunningham/snake-vm)
+[![Code Climate](https://codeclimate.com/github/travcunn/snake-vm/badges/gpa.svg)](https://codeclimate.com/github/travcunn/snake-vm)
 
 
 A simple virtual machine and program assembler written in Python
