@@ -15,7 +15,7 @@ A simple virtual machine and program assembler written in Python
   - [Putting it all together](#putting-it-all-together)
 - [Example Program](#example-program)
 - [Architecture](#architecture)
-  - [CPU](#cpu)
+  - [VM](#vm)
   - [Instruction Set](#instruction-set)
   - [Memory](#memory)
   - [IO](#io)
@@ -115,8 +115,10 @@ Run the program:
 ```
 
 # Architecture
-### CPU
-The CPU has 3 registers:
+### VM
+For performance, Snake VM uses a register-based bytecode interpreter.
+
+The VM has 3 registers:
 - Program counter register
 - Instruction register
 - Accumulator register
