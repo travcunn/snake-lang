@@ -1,5 +1,5 @@
 """ Test the virtual IO system. """
-from StringIO import StringIO
+from io import BytesIO
 import sys
 import os
 
@@ -20,7 +20,7 @@ def system():
 def test_io_load_file(system):
     """ Test loading a file. """
 
-    test_file = StringIO("hello world")
+    test_file = BytesIO("hello world")
 
     system.load_file(test_file)
 
