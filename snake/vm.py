@@ -1,7 +1,6 @@
 """ Snake Virtual Machine. """
-from __future__ import print_function
-
 import math
+import sys
 
 # Set memory to 4k
 MEMORY_SIZE = 1024 * 4
@@ -39,7 +38,7 @@ class IO(object):
 
     def stdout(self, data):
         """ Print data to stdout. """
-        print(data)
+        sys.stdout.write(data)
 
 
 class VirtualMachine(object):

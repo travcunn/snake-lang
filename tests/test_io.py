@@ -1,5 +1,8 @@
 """ Test the virtual IO system. """
-from io import BytesIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import sys
 import os
 
@@ -20,7 +23,7 @@ def system():
 def test_io_load_file(system):
     """ Test loading a file. """
 
-    test_file = BytesIO("hello world")
+    test_file = StringIO("hello world")
 
     system.load_file(test_file)
 
@@ -30,8 +33,8 @@ def test_io_load_file(system):
 def test_io_stdout(system):
     """ Test IO output. """
 
-    with patch('__builtin__.print') as mock_print:
+    with patch('snake.vm.sys.stdout') as mock_stdout:
         system.stdout('hello world')
-        mock_print.assert_has_calls([
+        mock_stdout.write.assert_has_calls([
             call('hello world')
         ])
