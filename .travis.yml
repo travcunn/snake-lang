@@ -13,7 +13,7 @@ script:
   - "py.test --cov-report=term-missing --cov-report=xml --cov=snake/ tests/"
   
 install:
-  - pip install codecov tox
+  - pip install mock pytest pytest-cov codecov
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
