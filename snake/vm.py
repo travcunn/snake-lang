@@ -36,7 +36,8 @@ class IO(object):
         """ Receives input from the IO device. """
         return self.reader.pop()
 
-    def stdout(self, data):
+    @staticmethod
+    def stdout(data):
         """ Print data to stdout. """
         sys.stdout.write(str(data) + "\n")
 
