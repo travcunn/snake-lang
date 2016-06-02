@@ -97,8 +97,6 @@ def vm_from_stdin():
         system = System()
         system.load_file(sys.stdin)
         system.run()
-    except StopIteration:
-        print("[IO Error]: The program could not be read from stdin")
     except:
         print "IR: %s\nPC: %s\n" % (system.ir, system.pc)
         raise
