@@ -41,7 +41,7 @@ def assembler():
             a.assemble()
             output_records = a.generated_records
         except StopIteration:
-            print("[IO Error]: The source program could not be read from stdin")
+            print("[IO Error]: The program could not be read from stdin")
         else:
             for record in output_records:
                 print(record)
@@ -74,7 +74,7 @@ def vm():
             system.load_file(sys.stdin)
             system.run()
         except StopIteration:
-            print("[IO Error]: The source program could not be read from stdin")
+            print("[IO Error]: The program could not be read from stdin")
         except:
             print "IR: %s\nPC: %s\n" % (system.ir, system.pc)
             raise
