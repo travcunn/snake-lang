@@ -1,5 +1,5 @@
 """ Test the virtual machine. """
-from StringIO import StringIO
+from io import BytesIO
 import sys
 import os
 
@@ -21,7 +21,7 @@ def system():
 def test_cycle(mock_opcode_0):
     """ Test a single cycle of bytecode execution. """
     system = System()
-    test_file = StringIO("001")
+    test_file = BytesIO("001")
     system.load_file(test_file)
     system.cycle()
     assert mock_opcode_0.called
@@ -30,7 +30,7 @@ def test_cycle(mock_opcode_0):
 @mock.patch('snake.vm.System.cycle')
 def test_loop(mock_cycle, system):
     """ Test the VM execution loop. """
-    test_file = StringIO("001")
+    test_file = BytesIO("001")
     system.load_file(test_file)
 
     def stop_vm():
