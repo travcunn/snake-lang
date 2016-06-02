@@ -10,11 +10,11 @@ setup  (
     url = 'https://github.com/travcunn/simple_cpu',
     license = 'MIT',
     packages  =  ['snake'],
-    package_dir = {'snake' : 'snake'},
+    package_dir = {'snake': 'snake'},
     entry_points = {
         'console_scripts': [
-            'snakevm = snake.__main__:vm',
-            'assembler = snake.__main__:assembler',
+            'snakevm = snake.cli:vm',
+            'assembler = snake.cli:assembler',
         ],
     },
     install_requires=[

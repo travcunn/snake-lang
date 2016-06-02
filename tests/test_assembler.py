@@ -1,4 +1,4 @@
-""" Test the virtual IO system. """
+""" Test the assembler. """
 try:
     from StringIO import StringIO
 except ImportError:

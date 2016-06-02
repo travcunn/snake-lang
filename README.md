@@ -64,8 +64,6 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  -o OUTFILE, --outfile OUTFILE
-                        output file (default: None)
 ```
 
 ### Putting it all together
