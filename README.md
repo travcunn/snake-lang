@@ -55,7 +55,7 @@ optional arguments:
 ### Snake VM usage
 ```
 # snakevm -h
-usage: snakevm [-h] [-o OUTFILE] file
+usage: snakevm [-h] file
 
 A simple vm.
 
