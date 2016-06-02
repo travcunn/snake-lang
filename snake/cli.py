@@ -88,7 +88,7 @@ def vm_from_args(in_file):
             system.load_file(f)
         system.run()
     except:
-        print "IR: %s\nPC: %s\n" % (system.ir, system.pc)
+        print("IR: %s\nPC: %s\n" % (system.ir, system.pc))
         raise
 
 
@@ -98,7 +98,7 @@ def vm_from_stdin():
         system.load_file(sys.stdin)
         system.run()
     except:
-        print "IR: %s\nPC: %s\n" % (system.ir, system.pc)
+        print("IR: %s\nPC: %s\n" % (system.ir, system.pc))
         raise
 
 
