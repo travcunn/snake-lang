@@ -1,7 +1,7 @@
+""" Test the virtual machine. """
 from StringIO import StringIO
 import sys
 import os
-import unittest
 
 import mock
 import pytest
@@ -11,164 +11,147 @@ from snake.vm import MEMORY_SIZE
 from snake.vm import System
 
 
-class BaseSystemTest(unittest.TestCase):
-    """ Base system test. """
-    def setUp(self):
-        self.vm = System()
+@pytest.fixture()
+def system():
+    """ Fixture to load a new VM. """
+    return System()
 
 
-class VirtualMachineTest(unittest.TestCase):
-    """ Test the virtual machine. """
-
-    @mock.patch('snake.vm.System.opcode_0')
-    def test_cycle(self, mock_opcode_0):
-        """ Test a single cycle of bytecode execution. """
-        vm = System()
-        test_file = StringIO("001")
-        vm.load_file(test_file)
-        vm.cycle()
-        assert mock_opcode_0.called
-
-    @mock.patch('snake.vm.System.cycle')
-    def test_loop(self, mock_cycle):
-        """ Test the VM execution loop. """
-
-        vm = System()
-        test_file = StringIO("001")
-        vm.load_file(test_file)
-
-        def stop_vm():
-            vm.running = False
-
-        # Stop the VM after one cycle
-        mock_cycle.side_effect = stop_vm
-        vm.run()
-        assert mock_cycle.called
-
-        
+@mock.patch('snake.vm.System.opcode_0')
+def test_cycle(mock_opcode_0):
+    """ Test a single cycle of bytecode execution. """
+    system = System()
+    test_file = StringIO("001")
+    system.load_file(test_file)
+    system.cycle()
+    assert mock_opcode_0.called
 
 
-class InpInstructionTest(BaseSystemTest):
-    """ Test INP instruction. """
-    def test_inp(self):
-        self.vm.reader = ['123']
-        self.vm.opcode_0(0)
-        assert self.vm.mem[0] == '123'
-        self.vm.reader = ['123']
-        self.vm.opcode_0(MEMORY_SIZE-1)
-        assert self.vm.mem[MEMORY_SIZE-1] == '123'
-        self.vm.reader = ['123']
-        with pytest.raises(IndexError):
-            self.vm.opcode_0(MEMORY_SIZE)
-        self.vm.reader = ['123']
-        with pytest.raises(IndexError):
-            self.vm.opcode_0(MEMORY_SIZE+1)
+@mock.patch('snake.vm.System.cycle')
+def test_loop(mock_cycle, system):
+    """ Test the VM execution loop. """
+    test_file = StringIO("001")
+    system.load_file(test_file)
+
+    def stop_vm():
+        """ Stops the VM. """
+        system.running = False
+
+    # Stop the VM after one cycle
+    mock_cycle.side_effect = stop_vm
+    system.run()
+    assert mock_cycle.called
 
 
-class ClaInstructionTest(BaseSystemTest):
-    """ Test CLA instruction. """
-    def test_cla(self):
-        assert self.vm.acc == 0
-        self.vm.mem[5] = 10
-        self.vm.opcode_1(5)
-        assert self.vm.acc == 10
-        self.vm.mem[6] = 15
-        self.vm.opcode_1(6)
-        assert self.vm.acc == 15
+def test_inp_opcode(system):
+    """ Test INP opcode. """
+    system.reader = ['123']
+    system.opcode_0(0)
+    assert system.mem[0] == '123'
+    system.reader = ['123']
+    system.opcode_0(MEMORY_SIZE-1)
+    assert system.mem[MEMORY_SIZE-1] == '123'
+    system.reader = ['123']
+    with pytest.raises(IndexError):
+        system.opcode_0(MEMORY_SIZE)
+    system.reader = ['123']
+    with pytest.raises(IndexError):
+        system.opcode_0(MEMORY_SIZE+1)
 
 
-class AddInstructionTest(BaseSystemTest):
-    """ Test ADD instruction. """
-    def test_add(self):
-        assert self.vm.acc == 0
-        self.vm.acc = 10
-        self.vm.mem[30] = 10
-        self.vm.opcode_2(30)
-        assert self.vm.acc == 20
+def test_cla_opcode(system):
+    """ Test CLA opcode. """
+    assert system.acc == 0
+    system.mem[5] = 10
+    system.opcode_1(5)
+    assert system.acc == 10
+    system.mem[6] = 15
+    system.opcode_1(6)
+    assert system.acc == 15
 
 
-class TacInstructionTest(BaseSystemTest):
-    """ Test TAC instruction. """
-    def test_tac(self):
-        assert self.vm.pc == 0
-        self.vm.acc = 1
-        self.vm.opcode_3(10)
-        assert self.vm.pc == 0
-        self.vm.acc = 0
-        self.vm.opcode_3(10)
-        assert self.vm.pc == 0
-        self.vm.acc = -1
-        self.vm.opcode_3(10)
-        assert self.vm.pc == 10
+def test_add_opcode(system):
+    """ Test ADD opcode. """
+    assert system.acc == 0
+    system.acc = 10
+    system.mem[30] = 10
+    system.opcode_2(30)
+    assert system.acc == 20
 
 
-class SftInstructionTest(BaseSystemTest):
-    """ Test SFT instruction. """
-    def test_sft(self):
-        self.vm.acc = 10
-        self.vm.opcode_4(1)
-        assert self.vm.acc == 1
-        self.vm.acc = 10
-        self.vm.opcode_4(10)
-        assert self.vm.acc == 100
+def test_tac_opcode(system):
+    """ Test TAC opcode. """
+    assert system.pc == 0
+    system.acc = 1
+    system.opcode_3(10)
+    assert system.pc == 0
+    system.acc = 0
+    system.opcode_3(10)
+    assert system.pc == 0
+    system.acc = -1
+    system.opcode_3(10)
+    assert system.pc == 10
 
 
-class OutInstructionTest(BaseSystemTest):
-    """ Test OUT instruction. """
-    def test_out(self):
-        self.vm.stdout = mock.MagicMock()
-        self.vm.mem[5] = 13
-        self.vm.opcode_5(5)
-        assert self.vm.stdout.called
+def test_sft_opcode(system):
+    """ Test SFT opcode. """
+    system.acc = 10
+    system.opcode_4(1)
+    assert system.acc == 1
+    system.acc = 10
+    system.opcode_4(10)
+    assert system.acc == 100
 
 
-class StoInstructionTest(BaseSystemTest):
-    """ Test STO instruction. """
-    def test_sto(self):
-        assert self.vm.mem[5] == 0
-        self.vm.acc = 10
-        self.vm.opcode_6(5)
-        assert self.vm.mem[5] == 10
+def test_out_opcode(system):
+    """ Test OUT opcode. """
+    system.stdout = mock.MagicMock()
+    system.mem[5] = 13
+    system.opcode_5(5)
+    assert system.stdout.called
 
 
-class SubInstructionTest(BaseSystemTest):
-    """ Test SUB instruction. """
-    def test_sub(self):
-        self.vm.acc = 10
-        self.vm.mem[5] = 4
-        self.vm.opcode_7(5)
-        assert self.vm.acc == 6
+def test_sto_opcode(system):
+    """ Test STO opcode. """
+    assert system.mem[5] == 0
+    system.acc = 10
+    system.opcode_6(5)
+    assert system.mem[5] == 10
 
 
-class JmpInstructionTest(BaseSystemTest):
-    """ Test JMP instruction. """
-    def test_jmp(self):
-        assert self.vm.pc == 0
-        self.vm.opcode_8(10)
-        assert self.vm.pc == 10
+def test_sub_opcode(system):
+    """ Test SUB opcode. """
+    system.acc = 10
+    system.mem[5] = 4
+    system.opcode_7(5)
+    assert system.acc == 6
 
 
-class HltInstructionTest(BaseSystemTest):
-    """ Test HLT instruction. """
-    def test_hlt(self):
-        self.vm.running = True
-        self.vm.opcode_9(0)
-        assert not self.vm.running
+def test_jmp_opcode(system):
+    """ Test JMP opcode. """
+    assert system.pc == 0
+    system.opcode_8(10)
+    assert system.pc == 10
 
 
-class MulInstructionTest(BaseSystemTest):
-    """ Test MUL instruction. """
-    def test_mul(self):
-        self.vm.acc = 12
-        self.vm.mem[5] = 6
-        self.vm.opcode_10(5)
-        assert self.vm.acc == 72
+def test_hlt_opcode(system):
+    """ Test HLT opcode. """
+    system.running = True
+    system.opcode_9(0)
+    assert not system.running
 
 
-class DivInstructionTest(BaseSystemTest):
-    """ Test DIV instruction. """
-    def test_div(self):
-        self.vm.acc = 72
-        self.vm.mem[5] = 6
-        self.vm.opcode_11(5)
-        assert self.vm.acc == 12
+def test_mul_opcode(system):
+    """ Test MUL opcode. """
+    system.acc = 12
+    system.mem[5] = 6
+    system.opcode_10(5)
+    assert system.acc == 72
+
+
+def test_div_opcode(system):
+    """ Test DIV opcode. """
+    system.acc = 72
+    system.mem[5] = 6
+    system.opcode_11(5)
+    assert system.acc == 12

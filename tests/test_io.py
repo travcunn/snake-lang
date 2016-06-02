@@ -1,38 +1,37 @@
+""" Test the virtual IO system. """
 from StringIO import StringIO
 import sys
 import os
-import unittest
 
 from mock import call
 from mock import patch
+import pytest
 
 sys.path.append(os.path.join('..', '..', 'snake'))
 from snake.vm import System
 
 
-class BaseSystemTest(unittest.TestCase):
-    """ Base system test. """
-    def setUp(self):
-        self.vm = System()
+@pytest.fixture()
+def system():
+    """ Fixture to load a new VM. """
+    return System()
 
 
-class VirtualIOTest(BaseSystemTest):
-    """ Test the virtual IO. """
+def test_io_load_file(system):
+    """ Test loading a file. """
 
-    def test_load_file(self):
-        """ Test loading a file. """
+    test_file = StringIO("hello world")
 
-        test_file = StringIO("hello world")
+    system.load_file(test_file)
 
-        self.vm.load_file(test_file)
+    assert system.get_input() == 'hello world'
 
-        assert self.vm.get_input() == 'hello world'
 
-    def test_stout(self):
-        """ Test IO output. """
+def test_io_stdout(system):
+    """ Test IO output. """
 
-        with patch('__builtin__.print') as mock_print:
-            self.vm.stdout('hello world')
-            mock_print.assert_has_calls([
-                call('hello world')
-            ])
+    with patch('__builtin__.print') as mock_print:
+        system.stdout('hello world')
+        mock_print.assert_has_calls([
+            call('hello world')
+        ])
