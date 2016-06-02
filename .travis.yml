@@ -8,12 +8,6 @@ matrix:
         - python: 3.3
         - python: 3.4
         - python: 3.5
-        - language: generic
-          os: osx
-          env: PYVER=py27
-        - language: generic
-          os: osx
-          env: PYVER=34
 
 script:
   - "py.test --cov-report=term-missing --cov-report=xml --cov=snake/ tests/"
