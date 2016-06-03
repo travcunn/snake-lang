@@ -14,12 +14,12 @@ class Memory(object):
     def __init__(self):
         """ Initialize memory. """
         self.mem = [0 for _ in range(0, MEMORY_SIZE)]
-        self.mem[0] = '001'
+        self.mem[0] = "input 1"
         super(Memory, self).__init__()
 
     def get_memint(self, data):
         """ Get memory value. """
-        return int(self.mem[data])
+        return self.mem[data]
 
 
 class IO(object):
@@ -69,8 +69,19 @@ class VirtualMachine(object):
     def init_instructions(self):
         """ Loads all CPU instructions. """
 
+        self.opcodes = {
+            'input': self.input,
+            'iadd': self.iadd,
+            'isub': self.isub,
+            'imul': self.imul,
+        }
+
+        """
         self.opcodes = [
             self.opcode_0,
+            self.iadd,
+            self.isub,
+            self.imul,
             self.opcode_1,
             self.opcode_2,
             self.opcode_3,
@@ -83,6 +94,7 @@ class VirtualMachine(object):
             self.opcode_10,
             self.opcode_11,
         ]
+        """
 
     def fetch(self):
         """
@@ -97,14 +109,24 @@ class VirtualMachine(object):
         """ Execute a single opcode from the current program counter. """
 
         self.fetch()
+        self.run_instruction(self.ir)
 
-        opcode, data = int(math.floor(self.ir / 100)), self.ir % 100
+    def run_instruction(self, instruction_line):
+        """ Run a single instruction. """
+
+        instruction = instruction_line.split()
+
+        if len(instruction) == 1:
+            opcode = instruction[0]
+            data = ""
+        else:
+            opcode, data = instruction_line.split()
 
         self.opcodes[opcode](data)
 
-    def opcode_0(self, data):
+    def input(self, data):
         """ INPUT Operation """
-        self.mem[data] = self.get_input()
+        self.mem[int(data)] = self.get_input()
 
     def opcode_1(self, data):
         """ Clear and Add Operation """
