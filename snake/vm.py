@@ -113,13 +113,29 @@ class VirtualMachine(object):
     def iadd(self, data):
         """
         iadd ri, rj, rk
-        Arithmetic operators for integers. rk =ri op rj
+        Arithmetic operator for integers. rk =ri op rj
         """
-
         i, j, k = map(int, data.split(','))
 
         self.registers[k] = self.registers[i] + self.registers[j]
 
+    def isub(self, data):
+        """
+        isub ri, rj, rk
+        Arithmetic operator for integers. rk =ri op rj
+        """
+        i, j, k = map(int, data.split(','))
+
+        self.registers[k] = self.registers[i] - self.registers[j]
+
+    def imul(self, data):
+        """
+        imul ri, rj, rk
+        Arithmetic operator for integers. rk =ri op rj
+        """
+        i, j, k = map(int, data.split(','))
+
+        self.registers[k] = self.registers[i] * self.registers[j]
 
     def opcode_2(self, data):
         """ Add Operation """

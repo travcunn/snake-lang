@@ -64,6 +64,40 @@ def test_iadd(system):
         system.iadd("0,1,%s" % (invalid_register))
 
 
+def test_isub(system):
+    """ Test isub. """
+    system.registers[0] = 5
+    system.registers[1] = 2
+    system.isub("0,1,2")
+    assert system.registers[2] == 3
+
+    system.registers[REGISTERS-3] = 5
+    system.registers[REGISTERS-2] = 2
+    system.isub("0,1,%s" % (REGISTERS-1,))
+    assert system.registers[REGISTERS-1] == 3
+
+    with pytest.raises(IndexError):
+        invalid_register = REGISTERS
+        system.isub("0,1,%s" % (invalid_register))
+
+
+def test_imul(system):
+    """ Test imul. """
+    system.registers[0] = 5
+    system.registers[1] = 2
+    system.imul("0,1,2")
+    assert system.registers[2] == 10
+
+    system.registers[REGISTERS-3] = 5
+    system.registers[REGISTERS-2] = 2
+    system.imul("0,1,%s" % (REGISTERS-1,))
+    assert system.registers[REGISTERS-1] == 10
+
+    with pytest.raises(IndexError):
+        invalid_register = REGISTERS
+        system.imul("0,1,%s" % (invalid_register))
+
+
 def test_inp_opcode(system):
     """ Test INP opcode. """
     system.reader = ['123']
