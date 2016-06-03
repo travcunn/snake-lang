@@ -4,6 +4,8 @@ import sys
 
 # Set memory to 4k
 MEMORY_SIZE = 1024 * 4
+# Set number of registers
+REGISTERS = 128
 
 
 class Memory(object):
@@ -43,11 +45,24 @@ class IO(object):
 
 
 class VirtualMachine(object):
-    """ Virtual machine that executes SnakeVM byte code. """
+    """ Virtual machine that executes Snake bytecode. """
 
     def __init__(self):
         self.init_instructions()
-        self.clear_registers()
+
+        # Program counter register
+        self.pc = 0
+        # Instruction register
+        self.ir = 0
+
+        #TODO remove this in favor of registers
+        self.acc = 0
+
+        # Registers
+        self.registers = [0 for _ in range(0, REGISTERS)]
+
+        # Is the CPU running?
+        self.running = False
 
         super(VirtualMachine, self).__init__()
 
@@ -68,18 +83,6 @@ class VirtualMachine(object):
             self.opcode_10,
             self.opcode_11,
         ]
-
-    def clear_registers(self):
-        """ Clear CPU registers. """
-
-        # Program counter register
-        self.pc = 0
-        # Instruction register
-        self.ir = 0
-        # Accumulator register
-        self.acc = 0
-        # Is the CPU running?
-        self.running = False
 
     def fetch(self):
         """
@@ -106,6 +109,17 @@ class VirtualMachine(object):
     def opcode_1(self, data):
         """ Clear and Add Operation """
         self.acc = self.get_memint(data)
+
+    def iadd(self, data):
+        """
+        iadd ri, rj, rk
+        Arithmetic operators for integers. rk =ri op rj
+        """
+
+        i, j, k = map(int, data.split(','))
+
+        self.registers[k] = self.registers[i] + self.registers[j]
+
 
     def opcode_2(self, data):
         """ Add Operation """

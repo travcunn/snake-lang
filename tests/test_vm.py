@@ -11,6 +11,7 @@ import pytest
 
 sys.path.append(os.path.join('..', '..', 'snake'))
 from snake.vm import MEMORY_SIZE
+from snake.vm import REGISTERS
 from snake.vm import System
 
 
@@ -44,6 +45,23 @@ def test_loop(mock_cycle, system):
     mock_cycle.side_effect = stop_vm
     system.run()
     assert mock_cycle.called
+
+
+def test_iadd(system):
+    """ Test iadd. """
+    system.registers[0] = 5
+    system.registers[1] = 2
+    system.iadd("0,1,2")
+    assert system.registers[2] == 7
+
+    system.registers[REGISTERS-3] = 5
+    system.registers[REGISTERS-2] = 2
+    system.iadd("0,1,%s" % (REGISTERS-1,))
+    assert system.registers[REGISTERS-1] == 7
+
+    with pytest.raises(IndexError):
+        invalid_register = REGISTERS
+        system.iadd("0,1,%s" % (invalid_register))
 
 
 def test_inp_opcode(system):
