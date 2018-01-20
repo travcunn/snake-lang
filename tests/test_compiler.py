@@ -18,20 +18,18 @@ def test_compile_simple_code():
     test_file = StringIO("""
 int foo = 10;
 
-void main() {
-   print(foo);
-   print(12);
+main() {
+  print(foo);
 }
     """)
 
     compiler = Compiler(test_file)
     compiler.compile()
 
-    assert assembler.generated_records == """
-a       DATA    10
-b       DATA    12
-main    OUT     a
-        OUT     b
-        JMP     exit
-exit    HLT     a
-    """
+    assert compiler.generated_records == [
+        "foo DATA 10",
+        "JMP main",
+        "main NOOP",
+        "OUT foo",
+        "exit HLT a"
+    ]

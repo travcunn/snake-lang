@@ -1,111 +1,107 @@
-OP_CODES = {
-    "inp": 0,
-    "cla": 1,
-    "add": 2,
-    "tac": 3,
-    "sft": 4,
-    "out": 5,
-    "sto": 6,
-    "sub": 7,
-    "jmp": 8,
-    "hlt": 9,
-    "mul": 10,
-    "div": 11,
-}
+class Token(object):
+    def generate(self):
+        pass
 
 
-class InstructionError(Exception):
-    pass
+class Integer(Token):
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
+
+    def generate(self):
+        return "%s DATA %s" % (self.name, self.value)
 
 
-class Assembler(object):
+class Print(Token):
+    def __init__(self, value):
+        self.value = value
+
+    def generate(self):
+        return "OUT %s" % (self.value, )
+
+
+class RunMain(Token):
+    def generate(self):
+        return "JMP main"
+
+
+class Function(Token):
+    def __init__(self, name):
+        self.name = name
+
+    def generate(self):
+        return "%s NOOP" % (self.name, )
+
+
+class Exit(Token):
+    def generate(self):
+        return "exit HLT a"
+
+
+class Compiler(object):
     def __init__(self, inputfile):
-
         self.contents = [line.rstrip('\n') for line in inputfile.readlines()]
 
-        self.generated_records = ["002", "800"]
+        self.data = []
+        self.program = []
 
-        self.data_p = 4
-        self.code_p = 10
+        self.generated_lexical = []
+        self.generated_records = []
 
-        # key:value => label:addr
-        self.symbol_table = {}
+        self.in_function = False
 
     def first_pass(self):
-        """ Collect all symbols in the first pass. """
-
-        code_p = self.code_p
-        data_p = self.data_p
-
+        """ Parse the program. """
         for line in self.contents:
-            tks = [tk.lower() for tk in line.split()]
+            line_contents = line.split(" ")
 
-            #: pass space or tab
-            if not tks:
+            # Skip empty lines
+            if not any(map(bool, line_contents)):
                 continue
 
-            #: label
-            if tks[0] not in OP_CODES and len(tks) >= 3:
-                label_name = tks[0]
-                if tks[1] == 'data':
-                    self.symbol_table[label_name] = data_p
-                else:
-                    self.symbol_table[label_name] = code_p
-                tks.remove(tks[0])
+            # Parse integers
+            if line_contents[0] == "int":
+                literal = int(line_contents[3].replace(";", ""))
+                integer = Integer(line_contents[1], literal)
+                self.data.append(integer)
 
-            if len(tks) >= 2 and tks[0] in OP_CODES:
-                code_p += 1
+            if line_contents[0].startswith("main()"):
+                main = Function("main")
+                self.program.append(main)
+                self.in_function = "main"
 
-            if len(tks) >= 2 and tks[0] == 'data':
-                data_p += 1
+            if self.in_function == "main" and line_contents[0] == "}":
+                self.in_function = False
+                # Exit the program after running the main function
+                self.program.append(Exit())
+
+            if len(line_contents) >= 3:
+                if line_contents[2].startswith("print("):
+                    value = line_contents[2].split("(")[1].split(")")[0]
+                    printer = Print(value)
+                    self.program.append(printer)
 
     def second_pass(self):
+        """ Generate a program binary. """
+        # Allocate all variables
+        for data_literal in self.data:
+            self.generated_lexical.append(data_literal)
 
-        for line in self.contents:
-            tks = [tk.lower() for tk in line.split()]
+        # Instruction to start executing the main function
+        self.generated_lexical.append(RunMain())
 
-            #: pass space or tab
-            if not tks:
-                continue
+        for program_data in self.program:
+            self.generated_lexical.append(program_data)
 
-            #: label
-            if tks[0] not in OP_CODES and len(tks) >= 3:
-                tks.remove(tks[0])
+    def third_pass(self):
+        """ Generate assembly from parsed code. """
+        for lexical in self.generated_lexical:
+            self.generated_records.append(lexical.generate())
 
-            #: data
-            if len(tks) >= 2 and tks[0] == 'data':
-                self.generated_records.append(self.pad(self.data_p))
-                self.generated_records.append(tks[1])
-                self.data_p += 1
-                continue
+        print(self.generated_lexical)
+        print(self.generated_records)
 
-            #: instruction
-            if len(tks) >= 2 and tks[0] in OP_CODES:
-                operation = tks[0]
-                address = tks[1]
-                op = str(OP_CODES[operation])
-                if address in self.symbol_table:
-                    address = self.pad(self.symbol_table[address], length=2)
-                code = op + address
-                self.generated_records.append(self.pad(self.code_p))
-                self.generated_records.append(code)
-                self.code_p += 1
-                continue
-
-            raise InstructionError("Instruction error: %s" % (tks,))
-
-        self.generated_records.append("002")
-        self.generated_records.append("810")
-
-    def assemble(self):
+    def compile(self):
         self.first_pass()
         self.second_pass()
-
-    @staticmethod
-    def pad(data, length=3):
-        """
-        Pads either an integer or a number in string format with zeros.
-        """
-        padding = '0' * length
-        data = '%s%s' % (padding, abs(data))
-        return data[-length:]
+        self.third_pass()
