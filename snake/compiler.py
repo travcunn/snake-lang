@@ -40,7 +40,7 @@ class Function(Token):
 
 class Exit(Token):
     def generate(self):
-        return "exit HLT a"
+        return "exit HLT 0"
 
 
 class Compiler(object):
