@@ -29,7 +29,7 @@ main() {
     assert compiler.generated_records == [
         "foo DATA 10",
         "JMP main",
-        "main NOOP",
+        "main NOOP 0",
         "OUT foo",
-        "exit HLT a"
+        "exit HLT 0"
     ]
