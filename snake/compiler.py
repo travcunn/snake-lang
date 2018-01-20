@@ -25,12 +25,17 @@ class RunMain(Token):
         return "JMP main"
 
 
+class Noop(Token):
+    def generate(self):
+        return "NOOP"
+
+
 class Function(Token):
     def __init__(self, name):
         self.name = name
 
     def generate(self):
-        return "%s NOOP" % (self.name, )
+        return "%s NOOP 0" % (self.name, )
 
 
 class Exit(Token):
@@ -97,9 +102,6 @@ class Compiler(object):
         """ Generate assembly from parsed code. """
         for lexical in self.generated_lexical:
             self.generated_records.append(lexical.generate())
-
-        print(self.generated_lexical)
-        print(self.generated_records)
 
     def compile(self):
         self.first_pass()

@@ -11,6 +11,7 @@ OP_CODES = {
     "hlt": 9,
     "mul": 10,
     "div": 11,
+    "noop": 12
 }
 
 
