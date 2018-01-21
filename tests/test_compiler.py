@@ -31,5 +31,5 @@ main() {
         "JMP main",
         "main NOOP 0",
         "OUT foo",
-        "exit HLT 0"
+        "exit HLT exitdata"
     ]
