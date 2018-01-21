@@ -11,6 +11,7 @@ import pytest
 
 sys.path.append(os.path.join('..', '..', 'snake'))
 from snake.vm import MEMORY_SIZE
+from snake.vm import REGISTERS
 from snake.vm import System
 
 
@@ -20,20 +21,20 @@ def system():
     return System()
 
 
-@mock.patch('snake.vm.System.opcode_0')
-def test_cycle(mock_opcode_0):
+@mock.patch('snake.vm.System.input')
+def test_cycle(mock_input):
     """ Test a single cycle of bytecode execution. """
     system = System()
-    test_file = StringIO("001")
+    test_file = StringIO("iadd 0,2,3")
     system.load_file(test_file)
     system.cycle()
-    assert mock_opcode_0.called
+    assert mock_input.called
 
 
 @mock.patch('snake.vm.System.cycle')
 def test_loop(mock_cycle, system):
     """ Test the VM execution loop. """
-    test_file = StringIO("001")
+    test_file = StringIO("input")
     system.load_file(test_file)
 
     def stop_vm():
@@ -46,20 +47,71 @@ def test_loop(mock_cycle, system):
     assert mock_cycle.called
 
 
+def test_iadd(system):
+    """ Test iadd. """
+    system.registers[0] = 5
+    system.registers[1] = 2
+    system.run_instruction("iadd 0,1,2")
+    assert system.registers[2] == 7
+
+    system.registers[REGISTERS-3] = 5
+    system.registers[REGISTERS-2] = 2
+    system.run_instruction("iadd 0,1,%s" % (REGISTERS-1,))
+    assert system.registers[REGISTERS-1] == 7
+
+    with pytest.raises(IndexError):
+        invalid_register = REGISTERS
+        system.run_instruction("iadd 0,1,%s" % (invalid_register))
+
+
+def test_isub(system):
+    """ Test isub. """
+    system.registers[0] = 5
+    system.registers[1] = 2
+    system.run_instruction("isub 0,1,2")
+    assert system.registers[2] == 3
+
+    system.registers[REGISTERS-3] = 5
+    system.registers[REGISTERS-2] = 2
+    system.run_instruction("isub 0,1,%s" % (REGISTERS-1,))
+    assert system.registers[REGISTERS-1] == 3
+
+    with pytest.raises(IndexError):
+        invalid_register = REGISTERS
+        system.run_instruction("isub 0,1,%s" % (invalid_register))
+
+
+def test_imul(system):
+    """ Test imul. """
+    system.registers[0] = 5
+    system.registers[1] = 2
+    system.run_instruction("imul 0,1,2")
+    assert system.registers[2] == 10
+
+    system.registers[REGISTERS-3] = 5
+    system.registers[REGISTERS-2] = 2
+    system.run_instruction("imul 0,1,%s" % (REGISTERS-1,))
+    assert system.registers[REGISTERS-1] == 10
+
+    with pytest.raises(IndexError):
+        invalid_register = REGISTERS
+        system.run_instruction("imul 0,1,%s" % (invalid_register))
+
+
 def test_inp_opcode(system):
     """ Test INP opcode. """
     system.reader = ['123']
-    system.opcode_0(0)
-    assert system.mem[0] == '123'
+    system.run_instruction("input 1")
+    assert system.mem[1] == '123'
     system.reader = ['123']
-    system.opcode_0(MEMORY_SIZE-1)
+    system.run_instruction("input %s" % (MEMORY_SIZE-1,))
     assert system.mem[MEMORY_SIZE-1] == '123'
     system.reader = ['123']
     with pytest.raises(IndexError):
-        system.opcode_0(MEMORY_SIZE)
+        system.run_instruction("input %s" % (MEMORY_SIZE,))
     system.reader = ['123']
     with pytest.raises(IndexError):
-        system.opcode_0(MEMORY_SIZE+1)
+        system.run_instruction("input %s" % (MEMORY_SIZE+1))
 
 
 def test_cla_opcode(system):
