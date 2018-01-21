@@ -67,6 +67,7 @@ class VirtualMachine(object):
             self.opcode_9,
             self.opcode_10,
             self.opcode_11,
+            self.opcode_12
         ]
 
     def clear_registers(self):
@@ -151,6 +152,10 @@ class VirtualMachine(object):
     def opcode_11(self, data):
         """ Divide operation """
         self.acc /= self.get_memint(data)
+
+    def opcode_12(self, data):
+        """ Noop operation """
+        return
 
     def run(self):
         """ Runs code in memory until halt opcode. """

@@ -2,7 +2,28 @@ import argparse
 import sys
 
 from .assembler import Assembler
+from .compiler import Compiler
 from .vm import System
+
+
+def create_compiler_parser():
+    """ Create an ArgumentParser for the compiler. """
+    parser = argparse.ArgumentParser(
+        description='A snake language compiler.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+
+    parser.add_argument(
+        "file",
+        help="file to be compiled."
+    )
+
+    parser.add_argument(
+        '-o', '--outfile', default=None, required=False,
+        help='output file'
+    )
+
+    return parser
 
 
 def create_assembler_parser():
@@ -76,6 +97,45 @@ def assemble_from_stdin():
     assembler = Assembler(sys.stdin)
     assembler.assemble()
     output_records = assembler.generated_records
+    for record in output_records:
+        print(record)
+
+
+def compiler():
+    """ Compiler entrypoint. """
+    # Take action depending on whether or not this is being pipelined
+    if sys.stdin.isatty():
+        parser = create_compiler_parser()
+        args = parser.parse_args()
+
+        compile_from_args(args.file, args.outfile)
+    else:
+        compile_from_stdin()
+
+
+def compile_from_args(in_file, out_file):
+    """ Read source program from in_file and save to out_file. """
+
+    with open(in_file, 'rb') as f:
+        compiler = Compiler(f)
+        compiler.compile()
+        output_records = compiler.generated_records
+
+    if out_file is None:
+        for record in output_records:
+            print(record)
+    else:
+        with open(out_file, 'wb') as w:
+            for record in output_records:
+                w.write(record)
+                w.write('\n')
+
+
+def compile_from_stdin():
+    """ Read source program from stdin and run the compiler. """
+    compiler = Compiler(sys.stdin)
+    compiler.compile()
+    output_records = compiler.generated_records
     for record in output_records:
         print(record)
 

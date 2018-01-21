@@ -15,6 +15,7 @@ setup  (
         'console_scripts': [
             'snakevm = snake.cli:vm',
             'assembler = snake.cli:assembler',
+            'compiler = snake.cli:compiler',
         ],
     },
     install_requires=[
