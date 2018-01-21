@@ -18,7 +18,7 @@ def test_primitives():
     test_file = StringIO("""
 int foo = 10;
 
-main() {
+void main() {
   print(foo);
 }
     """)
@@ -41,7 +41,7 @@ def test_function_return():
     test_file = StringIO("""
 int foo = 10;
 
-main() {
+void main() {
   print(foo);
 }
     """)
