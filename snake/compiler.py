@@ -40,7 +40,7 @@ class Function(Token):
 
 class Exit(Token):
     def generate(self):
-        return "exit HLT 0"
+        return "exit HLT exitdata"
 
 
 class Compiler(object):
@@ -88,6 +88,9 @@ class Compiler(object):
 
     def second_pass(self):
         """ Generate a program binary. """
+        # Data for exit
+        self.generated_lexical.append(Integer('exitdata', 0))
+
         # Allocate all variables
         for data_literal in self.data:
             self.generated_lexical.append(data_literal)

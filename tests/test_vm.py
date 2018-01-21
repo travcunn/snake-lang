@@ -158,3 +158,10 @@ def test_div_opcode(system):
     system.mem[5] = 6
     system.opcode_11(5)
     assert system.acc == 12
+
+
+def test_noop_opcode(system):
+    """ Test NOOP opcode. """
+    system.running = True
+    system.opcode_12(0)
+    assert system.pc == 0
