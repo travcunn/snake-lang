@@ -27,6 +27,7 @@ main() {
     compiler.compile()
 
     assert compiler.generated_records == [
+        "exitdata DATA 0",
         "foo DATA 10",
         "JMP main",
         "main NOOP 0",
