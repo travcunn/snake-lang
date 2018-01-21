@@ -28,7 +28,7 @@ result  DATA    0
         JMP     exit
 
 exit    HLT     a
-        
+
     """)
 
     assembler = Assembler(test_file)
@@ -50,7 +50,7 @@ def test_invalid_instructions():
         STO     result
         OUT     result
         JMP     exit
-        
+
     """)
 
     assembler = Assembler(test_file)
