@@ -70,7 +70,7 @@ class Compiler(object):
                 integer = Integer(line_contents[1], literal)
                 self.data.append(integer)
 
-            if line_contents[0].startswith("main()"):
+            if line_contents[0] == "void" and line_contents[1] == ("main()"):
                 main = Function("main")
                 self.program.append(main)
                 self.in_function = "main"
