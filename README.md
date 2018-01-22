@@ -98,7 +98,7 @@ compiler snakelang/simple.snake | assembler | snakevm
 ```
 
 # Example SnakeLang Program
-This code is somewhat self explanatory, but it defines a variable and in the `main()` function, this variable is printed to stdout.
+This code is somewhat self explanatory: A variable is defined and printed to stdout in the `main()` function.
 ```
 int foo = 10;
 
@@ -123,7 +123,7 @@ result  DATA    0
         ADD     b
         STO     result
         OUT     result
-        HRS     a
+        HLT     a
 ```
 Assemble the program:
 ```
