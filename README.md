@@ -27,7 +27,7 @@ The goal of this project is to build a programming language similar to C and a r
 
 # Features
 - The compiler produces simple intermediate representation (IR) code that is easy to debug.
-- The assembler generates binaries to be loaded into the Snake runtime.
+- The assembler generates binaries from IR code to be loaded into the Snake runtime.
 - The runtime uses a register-based bytecode interpreter to quickly execute instructions.
 
 # Installation
