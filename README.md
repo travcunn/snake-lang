@@ -114,11 +114,10 @@ main() {
   print(foo);
 }
 ```
-Compile the program:
+Compile, assemble, and run the program:
 ```
-# compiler < programs/simple.snake
+# compiler < programs/simple.snake | assembler | snakevm
 ```
-From there, the compiled IR code can be assembled and run in the Snake runtime.
 
 # Example IR Assembly
 This code adds `a` and `b`, stores the result in `result`, then prints the result to stdout.
