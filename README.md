@@ -1,4 +1,4 @@
-# Snake Language (language + runtime)
+# The Snake Programming Language
 [![Build Status](https://travis-ci.org/travcunn/snake-vm.svg?branch=master)](https://travis-ci.org/travcunn/snake-vm) [![codecov](https://codecov.io/gh/travcunn/snake-vm/branch/master/graph/badge.svg)](https://codecov.io/gh/travcunn/snake-vm)
 [![Code Health](https://landscape.io/github/travcunn/snake-vm/master/landscape.svg?style=flat)](https://landscape.io/github/travcunn/snake-vm/master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/839593667d9742098652296b8d0f1aa1)](https://www.codacy.com/app/tcunningham/snake-vm)
