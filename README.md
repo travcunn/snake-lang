@@ -4,7 +4,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/839593667d9742098652296b8d0f1aa1)](https://www.codacy.com/app/tcunningham/snake-vm)
 
 
-A simple virtual machine and program assembler written in Python
+Snake Language: A simple programming language and runtime
 
 # Table of Contents
 - [Installation](#installation)
