@@ -10,10 +10,12 @@ A simple virtual machine and program assembler written in Python
 - [Installation](#installation)
 - [Testing](#testing)
 - [Usage](#usage)
+  - [Compiler Usage](#compiler-usage)
   - [Assembler Usage](#assembler-usage)
   - [CPU Usage](#cpu-usage)
   - [Putting it all together](#putting-it-all-together)
-- [Example Program](#example-program)
+- [Example SnakeLang Program](#example-snakelang-program)
+- [Example IR Assembly](#example-ir-assembly)
 - [Architecture](#architecture)
   - [VM](#vm)
   - [Instruction Set](#instruction-set)
@@ -35,6 +37,23 @@ Code coverage:
 ```
 
 # Usage
+### Compiler Usage
+```
+compiler -h                                                                                                                   
+
+usage: compiler [-h] [-o OUTFILE] file
+
+A snake language compiler.
+
+positional arguments:
+  file                  file to be compiled.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTFILE, --outfile OUTFILE
+                        output file (default: None)
+```
+
 ### Assembler Usage
 ```
 # assembler -h
@@ -67,12 +86,34 @@ optional arguments:
 ```
 
 ### Putting it all together
-Alternatively, data can be piped into both the VM and assembler.
+Alternatively, data can be piped directly into the compiler, assembler, or the Snake runtime.
+
+Run assembled IR code in the runtime:
 ```
 # assembler < programs/test.src | snakevm
 ```
+Run compiled code in the runtime:
+```
+compiler snakelang/simple.snake | assembler | snakevm
+```
 
-# Example Program
+# Example SnakeLang Program
+This code is somewhat self explanatory, but it defines a variable and in the `main()` function, this variable is printed to stdout.
+```
+int foo = 10;
+
+main() {
+  print(foo);
+}
+```
+Compile the program:
+```
+# compiler < programs/simple.snake
+```
+From there, the compiled IR code can be assembled and run in the Snake runtime.
+
+# Example IR Assembly
+This code adds `a` and `b`, stores the result in `result`, then prints the result to stdout.
 ``` asm
 a       DATA    4
 b       DATA    2
@@ -87,26 +128,6 @@ result  DATA    0
 Assemble the program:
 ```
 # assembler < programs/test.src
-002
-800
-004
-4
-005
-2
-006
-0
-010
-204
-011
-205
-012
-606
-013
-506
-014
-904
-002
-810
 ```
 Run the program:
 ```
