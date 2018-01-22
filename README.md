@@ -6,6 +6,8 @@
 
 Snake Language: A simple programming language and runtime
 
+The goal of this project is to build a programming language similar to C and a runtime that executes simple instructions inside a virtual-machine environment.
+
 # Table of Contents
 - [Installation](#installation)
 - [Testing](#testing)
