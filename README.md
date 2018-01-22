@@ -9,6 +9,7 @@ Snake Language: A simple programming language and runtime
 The goal of this project is to build a programming language similar to C and a runtime that executes simple instructions inside a virtual-machine environment.
 
 # Table of Contents
+- [Features](#features)
 - [Installation](#installation)
 - [Testing](#testing)
 - [Usage](#usage)
@@ -23,6 +24,11 @@ The goal of this project is to build a programming language similar to C and a r
   - [Instruction Set](#instruction-set)
   - [Memory](#memory)
   - [IO](#io)
+
+# Features
+- The compiler produces simple intermediate representation (IR) code that is easy to debug.
+- The assembler generates binaries to be loaded into the Snake runtime.
+- The runtime uses a register-based bytecode interpreter to quickly execute instructions.
 
 # Installation
 ```
@@ -99,7 +105,7 @@ Run compiled code in the runtime:
 compiler snakelang/simple.snake | assembler | snakevm
 ```
 
-# Example SnakeLang Program
+# Example Snake Program
 This code is somewhat self explanatory: A variable is defined and printed to stdout in the `main()` function.
 ```
 int foo = 10;
