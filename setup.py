@@ -2,12 +2,12 @@
 from setuptools import setup
 
 setup  (
-    name        = 'snakevm',
+    name        = 'The Snake Programming Language\'s Simple Virtual Program Assembler',
     version     = '1.0.1',
     description = 'A simple virtual machine and program assembler',
     author = 'Travis Cunningham',
-    author_email = 'travcunn@umail.iu.edu',
-    url = 'https://github.com/travcunn/simple_cpu',
+    author_email = 'yoyo.monem22@gmail.com',
+    url = 'https://github.com/yoyomonem/snake-lang',
     license = 'MIT',
     packages  =  ['snake'],
     package_dir = {'snake': 'snake'},
